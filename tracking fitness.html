@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        input {
+            margin-right: 10px;
+        }
+        button {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+
+        function WorkoutLogger() {
+            const [workouts, setWorkouts] = React.useState([]);
+            const [workout, setWorkout] = React.useState('');
+
+            const handleAddWorkout = () => {
+                if (workout) {
+                    setWorkouts([...workouts, workout]);
+                    setWorkout('');
+                }
+            };
+
+            return (
+                <div>
+                    <h2>Log Workout</h2>
+                    <input 
+                        type="text" 
+                        value={workout} 
+                        onChange={(e) => setWorkout(e.target.value)} 
+                        placeholder="Enter workout" 
+                    />
+                    <button onClick={handleAddWorkout}>Add Workout</button>
+                    <ul>
+                        {workouts.map((workout, index) => (
+                            <li key={index}>{workout}</li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+
+        function GoalSetter() {
+            const [goal, setGoal] = React.useState('');
+            const [goalList, setGoalList] = React.useState([]);
+
+            const handleAddGoal = () => {
+                if (goal) {
+                    setGoalList([...goalList, goal]);
+                    setGoal('');
+                }
+            };
+
+            return (
+                <div>
+                    <h2>Set Fitness Goals</h2>
+                    <input 
+                        type="text" 
+                        value={goal} 
+                        onChange={(e) => setGoal(e.target.value)} 
+                        placeholder="Enter goal" 
+                    />
+                    <button onClick={handleAddGoal}>Add Goal</button>
+                    <ul>
+                        {goalList.map((goal, index) => (
+                            <li key={index}>{goal}</li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+
+        function ProgressTracker() {
+            // This would ideally come from API or state management
+            const workouts = ['Running', 'Cycling'];
+            const goals = ['Run 5km', 'Cycle 10km'];
+
+            return (
+                <div>
+                    <h2>Track Progress</h2>
+                    <div>
+                        <h3>Workouts</h3>
+                        <ul>
+                            {workouts.map((workout, index) => (
+                                <li key={index}>{workout}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Goals</h3>
+                        <ul>
+                            {goals.map((goal, index) => (
+                                <li key={index}>{goal}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <div>
+                    <h1>Fitness Tracker</h1>
+                    <WorkoutLogger />
+                    <GoalSetter />
+                    <ProgressTracker />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
